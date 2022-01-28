@@ -1,6 +1,7 @@
 package pages;
 
-import basePage.FluentBasePage;
+import basePage.BasePage;
+import io.qameta.allure.Step;
 import models.Product;
 import models.User;
 import org.openqa.selenium.WebDriver;
@@ -8,9 +9,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
-public class FluentTestPage extends FluentBasePage {
+public class TestPage extends BasePage {
 
-    public FluentTestPage(WebDriver driver) {
+    public TestPage(WebDriver driver) {
         super(driver);
     }
 
@@ -53,10 +54,10 @@ public class FluentTestPage extends FluentBasePage {
     @FindBy(css = "[name='password']")
     WebElement passwordInput;
 
-    @FindBy(css = "#customer-form div:nth-child(9) div:nth-child(2)>span") //span zamiast input - ani visibly of element ani clickable
+    @FindBy(css = "#customer-form div:nth-child(9) div:nth-child(2)>span")
     WebElement customerPrivacyCheckbox;
 
-    @FindBy(css = "#customer-form div:nth-child(11) div:nth-child(2)>span") //span zamiast input- ani visibly of element ani clickable
+    @FindBy(css = "#customer-form div:nth-child(11) div:nth-child(2)>span")
     WebElement policyCheckbox;
 
     @FindBy(css = "[data-link-action='register-new-customer']")
@@ -65,10 +66,10 @@ public class FluentTestPage extends FluentBasePage {
     @FindBy(css = ".form-footer .continue")
     WebElement personalInfoContinueButton;
 
-    @FindBy(css = "#payment-option-2-container>span") //span zamiast input- ani visibly of element ani clickable
+    @FindBy(css = "#payment-option-2-container>span")
     WebElement payByBankWireInput;
 
-    @FindBy(css = "#conditions-to-approve span:nth-child(1)")//span zamiast input- ani visibly of element ani clickable
+    @FindBy(css = "#conditions-to-approve span:nth-child(1)")
     WebElement termsAndConditionsCheckbox;
 
     @FindBy(css = ".ps-shown-by-js>[type='submit']")
@@ -83,29 +84,33 @@ public class FluentTestPage extends FluentBasePage {
     @FindBy(css = ".total-value>td:nth-child(2)")
     WebElement totalPrice;
 
-
-    public FluentTestPage clickOnFirstProduct() {
+    @Step("Click on first product")
+    public TestPage clickOnFirstProduct() {
         performClick(firstProduct);
-        return new FluentTestPage(driver);
+        return new TestPage(driver);
     }
 
-    public FluentTestPage addProductToCart(Product product) {
+    @Step("add product to cart")
+    public TestPage addProductToCart(Product product) {
         product.setPrice(price.getText());
         performClick(addToCartButton);
-        return new FluentTestPage(driver);
+        return new TestPage(driver);
     }
 
-    public FluentTestPage clickOnConfirmationProceedToCheckout() {
+    @Step("Click on confirmation proceed to checkout")
+    public TestPage clickOnConfirmationProceedToCheckout() {
         performClick(confirmationProceedToCheckout);
-        return new FluentTestPage(driver);
+        return new TestPage(driver);
     }
 
-    public FluentTestPage clickOnProceedToCheckout() {
+    @Step("Click on proceed to checkout")
+    public TestPage clickOnProceedToCheckout() {
         performClick(proceedToCheckoutButton);
-        return new FluentTestPage(driver);
+        return new TestPage(driver);
     }
 
-    public FluentTestPage registerNewUser(User user) {
+    @Step("Register new user")
+    public TestPage registerNewUser(User user) {
         setFirstName(user.getFirstName());
         setLastName(user.getLastName());
         setEmail(user.getEmail());
@@ -116,7 +121,14 @@ public class FluentTestPage extends FluentBasePage {
         return this;
     }
 
-    public FluentTestPage fillAddressForm(User user) {
+    @Step("Register new user")
+    public TestPage registerNewUserFail(User user) {
+
+        return this;
+    }
+
+    @Step("Fill in address form")
+    public TestPage fillAddressForm(User user) {
         Select country = new Select(countrySelect);
 
         typeTextTo(addressInput, user.getAddress());
@@ -127,72 +139,85 @@ public class FluentTestPage extends FluentBasePage {
 
     }
 
-    public FluentTestPage clickOnContinueButtonPersonalInfoSection() {
+    @Step("Click on continue button personal info section")
+    public TestPage clickOnContinueButtonPersonalInfoSection() {
         performClick(personalInfoContinueButton);
         return this;
     }
 
-    public FluentTestPage clickOnContinueButtonDeliveryInfoSection() {
+    @Step("Click on continue button delivery info section")
+    public TestPage clickOnContinueButtonDeliveryInfoSection() {
         performClick(deliveryInfoContinueButton);
         return this;
     }
 
-    public FluentTestPage selectPayByBankWire() {
+    @Step("Select pay by bank wire")
+    public TestPage selectPayByBankWire() {
         performClick(payByBankWireInput);
         return this;
     }
 
-    public FluentTestPage clickOnTermsAndConditionsCheckbox() {
+    @Step("Click on terms and conditions checkbox")
+    public TestPage clickOnTermsAndConditionsCheckbox() {
         performClick(termsAndConditionsCheckbox);
         return this;
     }
 
-    public FluentTestPage placeOrder() {
+    @Step("Place order")
+    public TestPage placeOrder() {
         performClick(placeOrderButton);
         return this;
     }
-
+    @Step("Get confirmation message")
     public String getConfirmationMessage() {
         return confirmationMessage.getText();
     }
 
+    @Step("Get total price")
     public String getTotalPrice() {
         return totalPrice.getText();
     }
 
 
-    public FluentTestPage setFirstName(String name) {
+    @Step("Set first name")
+    public TestPage setFirstName(String name) {
         typeTextTo(firstNameInput, name);
         return this;
     }
 
-    public FluentTestPage setLastName(String lastName) {
+    @Step("Set lat name")
+    public TestPage setLastName(String lastName) {
         typeTextTo(lastNameInput, lastName);
         return this;
     }
 
-    public FluentTestPage setEmail(String email) {
+    @Step("Set email")
+    public TestPage setEmail(String email) {
         typeTextTo(emailInput, email);
         return this;
     }
 
-    public FluentTestPage setPassword(String password) {
+    @Step("Set password")
+    public TestPage setPassword(String password) {
         typeTextTo(passwordInput, password);
         return this;
     }
 
-    public FluentTestPage checkCustomerPrivacyCheckbox() {
+    @Step("Check customer privacy checkbox")
+    public TestPage checkCustomerPrivacyCheckbox() {
         performClick(customerPrivacyCheckbox);
         return this;
     }
 
-    public FluentTestPage checkPolicyCheckbox() {
+    @Step("Check policy checkbox")
+    public TestPage checkPolicyCheckbox() {
         performClick(policyCheckbox);
         return this;
     }
 
-    public FluentTestPage clickOnSaveButton() {
+    @Step("Click on save button")
+    public TestPage clickOnSaveButton() {
         performClick(saveButton);
-        return new FluentTestPage(driver);
+        return new TestPage(driver);
     }
 }
